@@ -12,8 +12,6 @@ do
   if [ "$grade" == "#" ]
   then
     fileGrade=1
-    parent=$fileName
-    mkdir $parent
   elif [ "$grade" == "##" ]
   then
     fileGrade=2
@@ -21,9 +19,16 @@ do
 
   if [ $fileGrade -eq 1 ]
   then
-    touch ${parent}/README.md
+    if [ "$fileName" == "README" ]
+    then
+      touch README.md
+    else
+      parent=$fileName
+      mkdir $parent
+      touch ${parent}/README.md
+    fi
   elif [ $fileGrade -eq 2 ]
   then
     touch ${parent}/${fileName}.md
   fi
-done < README.md
+done < test.md
