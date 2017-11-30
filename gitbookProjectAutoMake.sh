@@ -1,10 +1,11 @@
 #!/bin/bash
 
 fileGrade=1
-parent=piggy
+yourFather=piggy
 
 touch SUMMARY.md
 summaryFile="SUMMARY.md"
+readmeFile="README.md"
 
 echo -e "# SUMMARY\n" > $summaryFile
 
@@ -26,33 +27,42 @@ do
   then
     if [ "$fileName" == "README" ]
     then
-      if [ ! -f "README.md" ]; then
-        touch README.md
-        echo "# $title" > README.md
+      if [ ! -f $readmeFile ]; then
+        touch $readmeFile
+        echo "# $title" > $readmeFile
+        echo "make a new file ------- $readmeFile"
       else
-        sed -i "1c # ${title}" README.md
+        sed -i "1c # ${title}" $readmeFile
+        echo -e "${readmeFile} is exited!\nupdate the title of ${readmeFile}"
       fi
     else
-      parent=$fileName
-      if [ ! -d ${parent} ]; then
-        mkdir $parent
+      yourFather=$fileName
+      if [ ! -d ${yourFather} ]; then
+        mkdir $yourFather
+        echo "make a new directory -- ${yourFather}"
       fi
-      if [ ! -f "${parent}/README.md" ]; then
-        touch ${parent}/README.md
-        echo "# $title" > ${parent}/README.md
+      if [ ! -f "${yourFather}/$readmeFile" ]; then
+        touch ${yourFather}/$readmeFile
+        echo "# $title" > ${yourFather}/${readmeFile}
+        echo "make a new file ------- ${yourFather}/${readmeFile}"
       else
-        sed -i "1c # ${title}" ${parent}/README.md
+        sed -i "1c # ${title}" ${yourFather}/${readmeFile}
+        echo -e "${yourFather}/${readmeFile} is exited!\nupdate the title of ${yourFather}/${readmeFile}"
       fi
       echo "* [${title}](${fileName}/README.md)" >> $summaryFile
     fi
   elif [ $fileGrade -eq 2 ]
   then
-    if [ ! -d "${parent}/${fileName}.md" ]; then
-      touch ${parent}/${fileName}.md
-      echo "# $title" > ${parent}/${fileName}.md
+    if [ ! -f "${yourFather}/${fileName}.md" ]; then
+      touch ${yourFather}/${fileName}.md
+      echo "# $title" > ${yourFather}/${fileName}.md
+      echo "make a new file ------- ${yourFather}/${fileName}.md"
     else
-      sed -i "1c # ${title}" ${parent}/${fileName}.md
+      sed -i "1c # ${title}" ${yourFather}/${fileName}.md
+      echo -e "${yourFather}/${fileName}.md is exited!\nupdate the title of ${yourFather}/${fileName}.md"
     fi
-    echo "  * [${title}](${parent}/${fileName}.md)" >> $summaryFile
+    echo "  * [${title}](${yourFather}/${fileName}.md)" >> $summaryFile
   fi
 done < config
+
+echo "end"
