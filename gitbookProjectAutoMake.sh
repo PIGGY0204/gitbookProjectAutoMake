@@ -17,8 +17,8 @@ else
 fi
 
 if [ ! -d ${project} ]; then
-  echo "the project directory does not exist!"
-  exit 1
+  mkdir $project
+  echo "the project directory does not exist! And I help you make this directory!"
 fi
 
 if [ ! -f ${config} ]; then 
@@ -103,4 +103,6 @@ do
     echo ""
 done < $config
 
-echo "finish"
+tree $project
+
+echo -e "\nfinish"
